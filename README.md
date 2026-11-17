@@ -40,10 +40,12 @@ Open `http://localhost:8080` in a browser. A local HTTP server is recommended be
 
 The repository includes a workflow that deploys the repository root to GitHub Pages whenever `main` changes.
 
-1. Push changes to `main`.
-2. In GitHub, open **Settings → Pages** and set **Source** to **GitHub Actions** if it is not already selected.
+1. Add a repository secret named `PAGES_TOKEN` containing a fine-grained token with repository administration and Pages write permissions.
+2. Push changes to `main`.
 3. Wait for the **Deploy to GitHub Pages** workflow to complete.
 4. Visit `https://chinmayapatil3spac-c.github.io/photo-pdf-toolkit/`.
+
+The token is required because GitHub does not allow the default `GITHUB_TOKEN` to enable Pages for a repository that has not been configured yet.
 
 The jsPDF browser bundle is vendored in the repository, so the converter does not need a third-party script request at runtime. Google Fonts are optional; the system fallback keeps the interface usable if they are unavailable.
 
