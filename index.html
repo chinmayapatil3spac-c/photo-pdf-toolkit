@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0c1222" />
+    <meta name="description" content="Photo PDF Toolkit — turn photos into a polished PDF, privately in your browser." />
+    <title>Photo PDF Toolkit — Photo to PDF, privately</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="vendor-jspdf.umd.min.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Photo PDF Toolkit home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>Photo PDF <em>Toolkit</em></span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#converter">Converter</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+      <a class="header-cta" href="#converter">Start creating <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> Fast, private, beautifully simple</p>
+          <h1 id="hero-title">Your photos,<br /><span>one polished PDF.</span></h1>
+          <p class="hero-description">Turn snapshots, scans, and documents into a shareable PDF in seconds. Everything happens right here on your device.</p>
+          <a class="button button-primary hero-button" href="#converter">Create a PDF <span aria-hidden="true">→</span></a>
+          <div class="trust-row"><span aria-hidden="true">✦</span> No uploads <span aria-hidden="true">·</span> No sign-up <span aria-hidden="true">·</span> Free forever</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-glow"></div>
+          <div class="paper paper-back"><span></span><span></span><span></span></div>
+          <div class="paper paper-front">
+            <div class="paper-photo"><div class="sun"></div><div class="mountain mountain-one"></div><div class="mountain mountain-two"></div><div class="lake"></div></div>
+            <div class="paper-lines"><i></i><i></i><i></i></div>
+            <div class="paper-badge">PDF</div>
+          </div>
+          <div class="floating-note note-top"><strong>100%</strong><small>private</small></div>
+          <div class="floating-note note-bottom"><span>✦</span><strong>Ready to share</strong></div>
+        </div>
+      </section>
+
+      <section class="tool-section" id="converter" aria-labelledby="converter-title">
+        <div class="section-heading">
+          <p class="eyebrow">01 / Photo to PDF</p>
+          <h2 id="converter-title">Make something <span>shareable.</span></h2>
+          <p>Arrange your photos, tune the page, and export a PDF that looks just right.</p>
+        </div>
+        <div class="workspace">
+          <div class="upload-panel">
+            <div class="panel-topline"><span>YOUR IMAGES</span><span id="image-count">0 selected</span></div>
+            <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-controls="file-input" aria-label="Select photos to convert">
+              <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden />
+              <div class="upload-icon" aria-hidden="true">↑</div>
+              <h3>Drop photos here</h3>
+              <p>or <button class="text-button" id="browse-button" type="button">browse your device</button></p>
+              <small>JPG, PNG, or WebP · up to 30 images</small>
+            </div>
+            <div class="preview-list" id="preview-list" aria-live="polite"></div>
+            <div class="upload-footer">
+              <button class="button button-secondary" id="add-more-button" type="button" disabled><span aria-hidden="true">+</span> Add more</button>
+              <p><span class="lock" aria-hidden="true">⌑</span> Your photos never leave your device</p>
+            </div>
+          </div>
+          <aside class="settings-panel" aria-labelledby="settings-title">
+            <div class="panel-topline"><span id="settings-title">PDF SETTINGS</span><span class="settings-spark" aria-hidden="true">✦</span></div>
+            <div class="setting-group">
+              <label for="page-size">Page size</label>
+              <select id="page-size">
+                <option value="a4">A4 · 210 × 297 mm</option>
+                <option value="letter">Letter · 8.5 × 11 in</option>
+                <option value="image">Image size · one image per page</option>
+              </select>
+            </div>
+            <div class="setting-group">
+              <span class="setting-label">Orientation</span>
+              <div class="segmented" role="group" aria-label="Page orientation">
+                <button class="segment active" type="button" data-orientation="portrait"><span aria-hidden="true">▯</span> Portrait</button>
+                <button class="segment" type="button" data-orientation="landscape"><span aria-hidden="true">▱</span> Landscape</button>
+              </div>
+            </div>
+            <div class="setting-group">
+              <span class="setting-label">Image fit</span>
+              <div class="segmented fit-options" role="group" aria-label="Image fit">
+                <button class="segment active" type="button" data-fit="contain">Fit</button>
+                <button class="segment" type="button" data-fit="cover">Fill</button>
+                <button class="segment" type="button" data-fit="original">Original</button>
+              </div>
+            </div>
+            <div class="setting-group">
+              <label for="margin">Page margin <output id="margin-value" for="margin">12 mm</output></label>
+              <input id="margin" type="range" min="0" max="30" value="12" />
+            </div>
+            <div class="settings-summary"><span>Estimated output</span><strong id="output-estimate">Add images to begin</strong></div>
+            <button class="button button-primary generate-button" id="generate-button" type="button" disabled><span aria-hidden="true">✦</span> Generate PDF <span aria-hidden="true">→</span></button>
+            <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="steps-section" id="how-it-works" aria-labelledby="steps-title">
+        <div class="section-heading compact"><p class="eyebrow">02 / Three simple steps</p><h2 id="steps-title">From camera roll<br />to <span>PDF-ready.</span></h2></div>
+        <div class="steps">
+          <article class="step"><div class="step-number">01</div><div class="step-icon">↥</div><h3>Select your photos</h3><p>Choose multiple images from your gallery or drop them into the toolkit.</p></article>
+          <article class="step"><div class="step-number">02</div><div class="step-icon">☷</div><h3>Make it yours</h3><p>Reorder pages, pick a layout, and set the size that fits your project.</p></article>
+          <article class="step"><div class="step-number">03</div><div class="step-icon">↓</div><h3>Download & share</h3><p>Generate your PDF and send it on its way. No account needed.</p></article>
+        </div>
+      </section>
+
+      <section class="privacy-section" id="privacy" aria-labelledby="privacy-title">
+        <div class="privacy-icon" aria-hidden="true">⌁</div>
+        <div><p class="eyebrow">Private by design</p><h2 id="privacy-title">Your images stay <span>yours.</span></h2><p>Photo PDF Toolkit processes everything locally in your browser. Your photos are never uploaded, stored, or seen by us.</p></div>
+        <div class="privacy-checks"><span>✓ No uploads</span><span>✓ No tracking</span><span>✓ No account</span></div>
+      </section>
+    </main>
+    <footer><span>© 2026 Photo PDF Toolkit</span><span>Made for the moments worth keeping.</span><a href="#privacy">Privacy first <span aria-hidden="true">↗</span></a></footer>
+    <div class="toast" id="toast" role="alert"></div>
+  </body>
+</html>
